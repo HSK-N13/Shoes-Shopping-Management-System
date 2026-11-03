@@ -4,10 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class connectDB {
+public class ConnectDB {
 	public static Connection con = null;
-    private static connectDB instance = new connectDB();
-    public static connectDB getInstance() {
+    private static ConnectDB instance = new ConnectDB();
+    public static ConnectDB getInstance() {
         return instance;
     }
 
