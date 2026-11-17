@@ -7,7 +7,7 @@ xây dựng theo file *Đặc tả nghiệp vụ - Quản lý cửa hàng giày 
 
 1. **Tạo CSDL** trong SQL Server Management Studio:
    - CSDL mới: chạy `database/schema.sql` (xóa và tạo lại `QuanLyBanHang`, có dữ liệu mẫu).
-   - Đã tạo CSDL bằng file `QuanLyBanHang.sql` cũ: chạy thêm `database/update_from_old_script.sql`
+   - Máy đã có CSDL `QuanLyBanHang` tạo từ script cũ của nhóm: chạy thêm `database/update_from_old_script.sql`
      (băm lại mật khẩu mẫu, thêm ràng buộc, không xóa dữ liệu).
 2. **Cấu hình kết nối** (nếu khác mặc định `sa` / `sapassword` / `localhost:1433`):
    sao chép `db.properties.example` thành `db.properties` ở thư mục gốc dự án rồi sửa.
