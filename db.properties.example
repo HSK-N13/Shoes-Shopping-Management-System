@@ -1,0 +1,4 @@
+# Sao chép file này thành db.properties (cùng thư mục chạy chương trình) và sửa cho đúng máy của bạn.
+db.url=jdbc:sqlserver://localhost:1433;databaseName=QuanLyBanHang;encrypt=false
+db.user=sa
+db.password=sapassword
