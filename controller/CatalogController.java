@@ -43,7 +43,8 @@ public class CatalogController extends BaseController {
         view.btnSearch.addActionListener(e -> handle(this::refresh));
         view.txtKeyword.addActionListener(e -> handle(this::refresh));
         view.btnNew.addActionListener(e -> clear());
-        view.btnSave.addActionListener(e -> handle(this::save));
+        view.btnAdd.addActionListener(e -> handle(() -> save(true)));
+        view.btnSave.addActionListener(e -> handle(() -> save(false)));
         view.btnDelete.addActionListener(e -> handle(this::delete));
         view.table.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
@@ -97,15 +98,22 @@ public class CatalogController extends BaseController {
     }
 
     /**
-     * Lưu (thêm mới hoặc cập nhật) bản ghi trên form.
+     * Thêm bản ghi mới hoặc cập nhật bản ghi đang chọn từ dữ liệu trên form.
+     *
+     * @param isNew true: thêm mới (bỏ qua dòng đang chọn); false: cập nhật dòng đang chọn
      */
-    private void save() {
-        if (kind == Kind.CATEGORY) {
-            service.saveCategory(selectedId, view.txtField1.getText(), view.chkActive.isSelected());
-        } else {
-            service.saveBrand(selectedId, view.txtField1.getText(), view.chkActive.isSelected());
+    private void save(boolean isNew) {
+        if (!isNew && selectedId == null) {
+            UiKit.error(view, "Hãy chọn dòng cần cập nhật trong bảng.");
+            return;
         }
-        UiKit.info(view, "Đã lưu.");
+        Long id = isNew ? null : selectedId;
+        if (kind == Kind.CATEGORY) {
+            service.saveCategory(id, view.txtField1.getText(), view.chkActive.isSelected());
+        } else {
+            service.saveBrand(id, view.txtField1.getText(), view.chkActive.isSelected());
+        }
+        UiKit.info(view, isNew ? "Đã thêm." : "Đã cập nhật.");
         refresh();
     }
 

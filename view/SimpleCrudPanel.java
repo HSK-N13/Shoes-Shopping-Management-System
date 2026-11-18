@@ -30,10 +30,12 @@ public class SimpleCrudPanel extends JPanel {
     public final JTextField txtField2 = new JTextField(22);
     /** Ô trạng thái sử dụng, có thể không dùng. */
     public final JCheckBox chkActive = new JCheckBox("Đang sử dụng", true);
-    /** Nút làm mới form. */
-    public final JButton btnNew = UiKit.button("Thêm mới");
-    /** Nút lưu. */
-    public final JButton btnSave = UiKit.button("Lưu");
+    /** Nút làm mới (xóa trắng) form. */
+    public final JButton btnNew = UiKit.button("Làm mới");
+    /** Nút thêm bản ghi mới từ dữ liệu trên form. */
+    public final JButton btnAdd = UiKit.button("Thêm");
+    /** Nút cập nhật bản ghi đang chọn. */
+    public final JButton btnSave = UiKit.button("Cập nhật");
     /** Nút xóa. */
     public final JButton btnDelete = UiKit.button("Xóa");
 
@@ -73,8 +75,8 @@ public class SimpleCrudPanel extends JPanel {
         formPanel = new JPanel(new BorderLayout());
         formPanel.add(UiKit.form("Thông tin", labels.toArray(new String[0]), fields.toArray(new JComponent[0])),
                 BorderLayout.NORTH);
-        formPanel.add(UiKit.row(btnNew, btnSave, btnDelete), BorderLayout.CENTER);
-        formPanel.setPreferredSize(new Dimension(380, 200));
+        formPanel.add(UiKit.row(btnNew, btnAdd, btnSave, btnDelete), BorderLayout.CENTER);
+        formPanel.setPreferredSize(new Dimension(480, 200));
         JPanel east = new JPanel(new BorderLayout());
         east.add(formPanel, BorderLayout.NORTH);
         add(east, BorderLayout.EAST);

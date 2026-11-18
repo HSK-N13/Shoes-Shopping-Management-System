@@ -32,10 +32,12 @@ public class UserPanel extends JPanel {
     public final JCheckBox chkActive = new JCheckBox("Đang hoạt động", true);
     /** Mật khẩu ban đầu (chỉ khi tạo mới). */
     public final JPasswordField txtPassword = new JPasswordField(18);
-    /** Nút làm mới form. */
-    public final JButton btnNew = UiKit.button("Thêm mới");
-    /** Nút lưu. */
-    public final JButton btnSave = UiKit.button("Lưu");
+    /** Nút làm mới (xóa trắng) form. */
+    public final JButton btnNew = UiKit.button("Làm mới");
+    /** Nút thêm tài khoản mới. */
+    public final JButton btnAdd = UiKit.button("Thêm");
+    /** Nút cập nhật tài khoản đang chọn. */
+    public final JButton btnSave = UiKit.button("Cập nhật");
     /** Nút đặt lại mật khẩu. */
     public final JButton btnResetPassword = UiKit.button("Đặt lại mật khẩu");
 
@@ -51,8 +53,8 @@ public class UserPanel extends JPanel {
         form.add(UiKit.form("Thông tin tài khoản",
                 new String[] { "Tên đăng nhập:", "Họ tên:", "Vai trò:", "", "Mật khẩu (tạo mới):" },
                 new JComponent[] { txtUsername, txtFullName, cboRole, chkActive, txtPassword }), BorderLayout.NORTH);
-        form.add(UiKit.row(btnNew, btnSave, btnResetPassword), BorderLayout.CENTER);
-        form.setPreferredSize(new Dimension(400, 260));
+        form.add(UiKit.row(btnNew, btnAdd, btnSave, btnResetPassword), BorderLayout.CENTER);
+        form.setPreferredSize(new Dimension(520, 260));
         JPanel east = new JPanel(new BorderLayout());
         east.add(form, BorderLayout.NORTH);
         add(east, BorderLayout.EAST);

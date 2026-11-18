@@ -31,7 +31,8 @@ public class UserController extends BaseController {
     public UserController(UserPanel view) {
         this.view = view;
         view.btnNew.addActionListener(e -> clear());
-        view.btnSave.addActionListener(e -> handle(this::save));
+        view.btnAdd.addActionListener(e -> handle(() -> save(true)));
+        view.btnSave.addActionListener(e -> handle(() -> save(false)));
         view.btnResetPassword.addActionListener(e -> handle(this::resetPassword));
         view.tblUsers.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
@@ -94,10 +95,15 @@ public class UserController extends BaseController {
 
     /**
      * Tạo tài khoản mới hoặc cập nhật tài khoản đang chọn.
+     *
+     * @param isNew true: tạo tài khoản mới; false: cập nhật tài khoản đang chọn
      */
-    private void save() {
+    private void save(boolean isNew) {
         Role role = (Role) view.cboRole.getSelectedItem();
-        if (selectedId == null) {
+        if (!isNew && selectedId == null) {
+            throw new BusinessException("Hãy chọn tài khoản cần cập nhật trong bảng.");
+        }
+        if (isNew) {
             User u = userService.create(view.txtUsername.getText(), view.txtFullName.getText(), role,
                     new String(view.txtPassword.getPassword()));
             UiKit.info(view, "Đã tạo tài khoản " + u.getUsername() + ".");

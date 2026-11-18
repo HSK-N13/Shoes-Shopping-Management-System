@@ -52,10 +52,12 @@ public class ProductController extends BaseController {
             }
         });
         view.btnNewProduct.addActionListener(e -> clearProductForm());
-        view.btnSaveProduct.addActionListener(e -> handle(this::saveProduct));
+        view.btnAddProduct.addActionListener(e -> handle(() -> saveProduct(true)));
+        view.btnSaveProduct.addActionListener(e -> handle(() -> saveProduct(false)));
         view.btnDeleteProduct.addActionListener(e -> handle(this::deleteProduct));
         view.btnNewVariant.addActionListener(e -> clearVariantForm());
-        view.btnSaveVariant.addActionListener(e -> handle(this::saveVariant));
+        view.btnAddVariant.addActionListener(e -> handle(() -> saveVariant(true)));
+        view.btnSaveVariant.addActionListener(e -> handle(() -> saveVariant(false)));
         view.btnDeleteVariant.addActionListener(e -> handle(this::deleteVariant));
     }
 
@@ -164,18 +166,24 @@ public class ProductController extends BaseController {
     }
 
     /**
-     * Lưu sản phẩm (thêm mới nếu chưa chọn sản phẩm nào).
+     * Thêm sản phẩm mới hoặc cập nhật sản phẩm đang chọn.
+     *
+     * @param isNew true: thêm mới; false: cập nhật sản phẩm đang chọn
      */
-    private void saveProduct() {
+    private void saveProduct(boolean isNew) {
+        if (!isNew && selectedProductId == null) {
+            UiKit.error(view, "Hãy chọn sản phẩm cần cập nhật trong bảng.");
+            return;
+        }
         Product p = new Product();
-        p.setId(selectedProductId);
+        p.setId(isNew ? null : selectedProductId);
         p.setName(view.txtName.getText());
         p.setDescription(view.txtDescription.getText());
         p.setCategoryId(idOf(view.cboCategory.getSelectedItem()));
         p.setBrandId(idOf(view.cboBrand.getSelectedItem()));
         p.setActive(view.chkActive.isSelected());
         productService.saveProduct(p);
-        UiKit.info(view, "Đã lưu sản phẩm.");
+        UiKit.info(view, isNew ? "Đã thêm sản phẩm." : "Đã cập nhật sản phẩm.");
         Long keep = p.getId();
         search();
         reselect(keep);
@@ -199,15 +207,21 @@ public class ProductController extends BaseController {
     }
 
     /**
-     * Lưu biến thể của sản phẩm đang chọn.
+     * Thêm biến thể mới hoặc cập nhật biến thể đang chọn của sản phẩm đang chọn.
+     *
+     * @param isNew true: thêm mới; false: cập nhật biến thể đang chọn
      */
-    private void saveVariant() {
+    private void saveVariant(boolean isNew) {
         if (selectedProductId == null) {
-            UiKit.error(view, "Hãy chọn sản phẩm trước.");
+            UiKit.error(view, "Hãy chọn sản phẩm (mẫu giày) trong bảng phía trên trước.");
+            return;
+        }
+        if (!isNew && selectedVariantId == null) {
+            UiKit.error(view, "Hãy chọn biến thể cần cập nhật trong bảng.");
             return;
         }
         ProductVariant v = new ProductVariant();
-        v.setId(selectedVariantId);
+        v.setId(isNew ? null : selectedVariantId);
         v.setProductId(selectedProductId);
         v.setSku(view.txtSku.getText());
         v.setSize(view.txtSize.getText());
@@ -216,7 +230,7 @@ public class ProductController extends BaseController {
         v.setMinStock(Formatter.parseInt(view.txtMinStock.getText(), "Tồn tối thiểu"));
         v.setActive(view.chkVariantActive.isSelected());
         productService.saveVariant(v);
-        UiKit.info(view, "Đã lưu biến thể " + v.getSku() + ".");
+        UiKit.info(view, (isNew ? "Đã thêm biến thể " : "Đã cập nhật biến thể ") + v.getSku() + ".");
         loadVariants();
     }
 

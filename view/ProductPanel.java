@@ -44,10 +44,12 @@ public class ProductPanel extends JPanel {
     public final JTextArea txtDescription = new JTextArea(3, 20);
     /** Đang kinh doanh. */
     public final JCheckBox chkActive = new JCheckBox("Đang kinh doanh", true);
-    /** Nút làm mới form sản phẩm. */
-    public final JButton btnNewProduct = UiKit.button("Thêm mới");
-    /** Nút lưu sản phẩm. */
-    public final JButton btnSaveProduct = UiKit.button("Lưu sản phẩm");
+    /** Nút làm mới (xóa trắng) form sản phẩm. */
+    public final JButton btnNewProduct = UiKit.button("Làm mới");
+    /** Nút thêm sản phẩm mới. */
+    public final JButton btnAddProduct = UiKit.button("Thêm");
+    /** Nút cập nhật sản phẩm đang chọn. */
+    public final JButton btnSaveProduct = UiKit.button("Cập nhật");
     /** Nút xóa/ngừng kinh doanh sản phẩm. */
     public final JButton btnDeleteProduct = UiKit.button("Xóa / Ngừng KD");
 
@@ -65,10 +67,12 @@ public class ProductPanel extends JPanel {
     public final JTextField txtMinStock = new JTextField("5", 6);
     /** Biến thể đang kinh doanh. */
     public final JCheckBox chkVariantActive = new JCheckBox("Đang kinh doanh", true);
-    /** Nút làm mới form biến thể. */
-    public final JButton btnNewVariant = UiKit.button("Thêm mới");
-    /** Nút lưu biến thể. */
-    public final JButton btnSaveVariant = UiKit.button("Lưu biến thể");
+    /** Nút làm mới (xóa trắng) form biến thể. */
+    public final JButton btnNewVariant = UiKit.button("Làm mới");
+    /** Nút thêm biến thể mới. */
+    public final JButton btnAddVariant = UiKit.button("Thêm");
+    /** Nút cập nhật biến thể đang chọn. */
+    public final JButton btnSaveVariant = UiKit.button("Cập nhật");
     /** Nút xóa/ngừng kinh doanh biến thể. */
     public final JButton btnDeleteVariant = UiKit.button("Xóa / Ngừng KD");
 
@@ -99,8 +103,8 @@ public class ProductPanel extends JPanel {
                 new String[] { "Tên:", "Danh mục:", "Thương hiệu:", "Mô tả:", "" },
                 new JComponent[] { txtName, cboCategory, cboBrand, new JScrollPane(txtDescription), chkActive }),
                 BorderLayout.CENTER);
-        productForm.add(UiKit.row(btnNewProduct, btnSaveProduct, btnDeleteProduct), BorderLayout.SOUTH);
-        productForm.setPreferredSize(new Dimension(380, 260));
+        productForm.add(UiKit.row(btnNewProduct, btnAddProduct, btnSaveProduct, btnDeleteProduct), BorderLayout.SOUTH);
+        productForm.setPreferredSize(new Dimension(480, 260));
         JPanel top = new JPanel(new BorderLayout());
         top.add(UiKit.scroll(tblProducts, "Danh sách mẫu giày"), BorderLayout.CENTER);
         top.add(productForm, BorderLayout.EAST);
@@ -110,8 +114,8 @@ public class ProductPanel extends JPanel {
                 new String[] { "SKU:", "Size:", "Màu:", "Giá bán:", "Tồn tối thiểu:", "" },
                 new JComponent[] { txtSku, txtSize, txtColor, txtPrice, txtMinStock, chkVariantActive }),
                 BorderLayout.CENTER);
-        variantForm.add(UiKit.row(btnNewVariant, btnSaveVariant, btnDeleteVariant), BorderLayout.SOUTH);
-        variantForm.setPreferredSize(new Dimension(380, 260));
+        variantForm.add(UiKit.row(btnNewVariant, btnAddVariant, btnSaveVariant, btnDeleteVariant), BorderLayout.SOUTH);
+        variantForm.setPreferredSize(new Dimension(480, 260));
         JPanel bottom = new JPanel(new BorderLayout());
         bottom.add(UiKit.scroll(tblVariants, "Biến thể của mẫu đang chọn"), BorderLayout.CENTER);
         bottom.add(variantForm, BorderLayout.EAST);
